@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
@@ -11,6 +12,77 @@ import TaskIcon from '@mui/icons-material/Task';
 
 
 export default function Home() {
+
+
+
+  const [users, setusers] = useState([]);
+  const [todos, settodos] = useState([]);
+  const [posts, setposts] = useState([]);
+  const [albums, setalbums] = useState([])
+
+   useEffect(() => {
+        readUsers();
+        readAlbums();
+        readTodos();
+        readPosts();
+    }, [])
+
+  function readUsers(){
+     fetch('https://jsonplaceholder.typicode.com/users')
+
+        .then((response) => response.json())
+
+        .then((response) =>{
+            setusers(response)
+            consolelog("users",response)
+        })
+        .catch((err)=>{
+            console.log(err.response)
+        })
+  }
+
+
+  function readTodos(){
+     fetch('https://jsonplaceholder.typicode.com/todos')
+        .then((res)=>res.json())
+        .then((response) =>{
+            settodos(response)
+            console.log(response)
+        })
+        .catch((err)=>{
+            console.log(err.response)
+      })
+  }
+
+
+  function readAlbums(){
+     fetch('https://jsonplaceholder.typicode.com/albums')
+        .then((res)=> res.json())
+        .then((response)=>{
+            setalbums(response)
+            console.log("albums",response)
+        }).catch((err)=>{
+            console.log(err.response)
+        })
+  }
+
+  
+  function readPosts(){
+     fetch('https://jsonplaceholder.typicode.com/posts')
+
+        .then((response) => response.json())
+
+        .then((response) => {
+            console.log(response)
+            setposts(response)
+            setposts(resonse)
+        }).catch((err)=>{
+            console.log(err.response)
+        })
+  }
+  
+
+
   return (
     <>
       <DashboardLayout title="Weza app">
@@ -39,7 +111,11 @@ export default function Home() {
                       <PeopleAltOutlinedIcon fontSize="large" />
                     </Grid>
 
-                    <Grid xs style={{display:'flex', justifyContent:'flex-end'}} item >number</Grid>
+                    <Grid xs style={{display:'flex', justifyContent:'flex-end'}} item >
+                      <Typography component="h2" variant="h4">
+                        {users.length}
+                      </Typography>
+                      </Grid>
 
                   </Grid>
                 </Box>
@@ -66,7 +142,11 @@ export default function Home() {
                       <PostAddIcon fontSize="large" />
                     </Grid>
 
-                    <Grid xs style={{display:'flex', justifyContent:'flex-end'}} item >number</Grid>
+                    <Grid xs style={{display:'flex', justifyContent:'flex-end'}} item >
+                      <Typography component="h2" variant="h4">
+                        {posts.length}
+                      </Typography>
+                    </Grid>
 
                   </Grid>
                 </Box>
@@ -93,7 +173,11 @@ export default function Home() {
                       <PhotoAlbumIcon fontSize="large" />
                     </Grid>
 
-                    <Grid xs style={{display:'flex', justifyContent:'flex-end'}} item >number</Grid>
+                    <Grid xs style={{display:'flex', justifyContent:'flex-end'}} item >
+                      <Typography component="h2" variant="h4">
+                        {albums.length}
+                      </Typography>
+                    </Grid>
 
                   </Grid>
                 </Box>
@@ -120,7 +204,11 @@ export default function Home() {
                       <TaskIcon fontSize="large" />
                     </Grid>
 
-                    <Grid xs style={{display:'flex', justifyContent:'flex-end'}} item >number</Grid>
+                    <Grid xs style={{display:'flex', justifyContent:'flex-end'}} item >
+                      <Typography component="h2" variant="h4">
+                        {todos.length}
+                      </Typography>
+                      </Grid>
 
                   </Grid>
                 </Box>

@@ -1,6 +1,7 @@
 import { Backdrop, Button, Container, CssBaseline, Fade, Grid, Modal } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { modalStyle } from "../../components/assets/css/Styles";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import Post from "../../components/posts/Post";
@@ -36,8 +37,8 @@ export default function Index() {
         })
         .then((response) =>response.json())
         .then((response)=>{
-            console.log(response,"deleted")
             toast.success("Post deleted")
+            console.log(response,"deleted")
         }).catch((err)=>{
             console.log(err.response)
         })
