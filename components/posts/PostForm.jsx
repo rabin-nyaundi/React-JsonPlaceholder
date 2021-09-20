@@ -3,7 +3,7 @@ import * as Yup from 'yup'
 import { toast } from "react-toastify";
 import { Button, Container, CssBaseline, Grid, TextField } from '@mui/material';
 import { Box } from '@mui/system';
-import { patch, post } from '../utils/API';
+import { post, patch, openPost } from '../utils/API';
 
 
 export default function PostForm(props) {
@@ -31,7 +31,7 @@ export default function PostForm(props) {
        else{
         console.log("id not in post")
 
-            post('/posts',postData)
+            openPost('/posts',postData)
                 .then((response) => {
                     toast.success('post Added')
                     console.log(response)

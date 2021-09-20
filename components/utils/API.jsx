@@ -11,7 +11,19 @@ export const get = async (urlSuffix) => {
 export const post = async (urlSuffix, postData) => {
     const res = await fetch(app.endpoint + urlSuffix, {
         method: 'POST',
-        data: JSON.stringify(postData),
+        body: JSON.stringify(postData),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        }
+    });
+
+    return await res.json()
+}
+
+export const openPost = async (urlSuffix, postData) => {
+    const res = await fetch(app.endpoint + urlSuffix, {
+        method: 'POST',
+        body: JSON.stringify(postData),
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
         }
@@ -24,7 +36,7 @@ export const post = async (urlSuffix, postData) => {
 export const patch = async (urlSuffix, postData) => {
     const res = await fetch(app.endpoint + urlSuffix, {
         method: 'PUT',
-        data: JSON.stringify(postData),
+        body: JSON.stringify(postData),
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
         }
