@@ -6,6 +6,7 @@ import { modalStyle } from "../../components/assets/css/Styles";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import Post from "../../components/posts/Post";
 import PostForm from "../../components/posts/PostForm";
+import { discard, get } from "../../components/utils/API";
 
 export default function Index() {
 
@@ -16,10 +17,7 @@ export default function Index() {
         readPosts();
     },[])
     const readPosts = () =>{
-        fetch('https://jsonplaceholder.typicode.com/posts')
-
-        .then((response) => response.json())
-
+        get('/posts')
         .then((response) => {
             console.log(response)
             setposts(response)
@@ -32,10 +30,9 @@ export default function Index() {
 
     const handleDelete = (id) =>{
         console.log(id)
-        fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+        discard(`/posts/${id}`, {
             method: 'DELETE',
         })
-        .then((response) =>response.json())
         .then((response)=>{
             toast.success("Post deleted")
             console.log(response,"deleted")

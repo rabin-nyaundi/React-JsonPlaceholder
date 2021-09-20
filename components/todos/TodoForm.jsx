@@ -3,6 +3,7 @@ import * as Yup from 'yup'
 import { toast } from "react-toastify";
 import { Button, Container, CssBaseline, Grid, TextField } from '@mui/material';
 import { Box } from '@mui/system';
+import { patch, post } from '../utils/API';
 
 
 
@@ -21,14 +22,7 @@ export default function TodoForm(props) {
         }
 
        if ('id' in todo){
-           fetch(`https://jsonplaceholder.typicode.com/todos/${todo.id}`,{
-                method: 'PUT',
-                body: JSON.stringify(postData),
-                 headers: {
-                     'Content-type': 'application/json; charset=UTF-8',
-                    },
-                })
-                .then((response) => response.json())
+           patch(`/todos/${todo.id}`, postData)
                 .then((response) => {
                     toast.success('Todo Updated')
                     console.log(response)
@@ -39,14 +33,7 @@ export default function TodoForm(props) {
        }
        else{
 
-            fetch('https://jsonplaceholder.typicode.com/todos',{
-                method: 'POST',
-                body: JSON.stringify(postData),
-                 headers: {
-                     'Content-type': 'application/json; charset=UTF-8',
-                    },
-                })
-                .then((response) => response.json())
+            post('/todos', postData)
                 .then((response) => {
                     toast.success('Todo Added')
                     console.log(response)

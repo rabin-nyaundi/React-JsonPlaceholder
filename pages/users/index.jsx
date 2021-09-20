@@ -6,6 +6,7 @@ import Users from "../../components/users/Users";
 import { modalStyle } from "../../components/assets/css/Styles";
 import UserForm from "../../components/users/UserForm";
 import { toast } from "react-toastify";
+import { get } from "../../components/utils/API";
 
 
 export default function Index() {
@@ -18,10 +19,7 @@ export default function Index() {
     }, []);
 
     const readUsers = () => {
-        fetch('https://jsonplaceholder.typicode.com/users')
-
-        .then((response) => response.json())
-
+        get('/users')
         .then((response) =>{
             setusers(response)
             consolelog("users",response)

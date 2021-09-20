@@ -2,6 +2,7 @@ import { ImageList } from "@mui/material";
 import { useEffect, useState } from "react";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import Photo from '../../components/photos/Photo';
+import { get } from "../../components/utils/API";
 
 
 export default function index() {
@@ -15,8 +16,7 @@ export default function index() {
 
     function readPhotos() {
         setloading(true)
-        fetch('https://jsonplaceholder.typicode.com/photos/?albumId=1')
-        .then((res) =>res.json())
+        get('/photos/?albumId=1')
         .then((response) =>{
             setphotos(response)
             console.log(response)

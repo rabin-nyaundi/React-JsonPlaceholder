@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
 import DashboardLayout from '../components/layout/DashboardLayout'
 import { Container, CssBaseline, Box, Grid, Divider, Typography } from '@mui/material';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import PhotoAlbumIcon from '@mui/icons-material/PhotoAlbum';
 import TaskIcon from '@mui/icons-material/Task';
+import { get } from '../components/utils/API';
 
 
 
@@ -28,10 +26,7 @@ export default function Home() {
     }, [])
 
   function readUsers(){
-     fetch('https://jsonplaceholder.typicode.com/users')
-
-        .then((response) => response.json())
-
+     get('/users')
         .then((response) =>{
             setusers(response)
             consolelog("users",response)
@@ -43,34 +38,31 @@ export default function Home() {
 
 
   function readTodos(){
-     fetch('https://jsonplaceholder.typicode.com/todos')
-        .then((res)=>res.json())
-        .then((response) =>{
-            settodos(response)
-            console.log(response)
-        })
-        .catch((err)=>{
-            console.log(err.response)
+     get('/todos')
+     .then((response) =>{
+        settodos(response)
+        console.log(response)
       })
+      .catch((err)=>{
+        console.log(err.response)
+       })
   }
 
 
   function readAlbums(){
-     fetch('https://jsonplaceholder.typicode.com/albums')
-        .then((res)=> res.json())
-        .then((response)=>{
-            setalbums(response)
-            console.log("albums",response)
-        }).catch((err)=>{
-            console.log(err.response)
-        })
+     get('/albums')
+     .then((response)=>{
+       setalbums(response)
+       console.log("albums",response)
+      })
+      .catch((err)=>{
+        console.log(err.response)
+      })
   }
 
   
   function readPosts(){
-     fetch('https://jsonplaceholder.typicode.com/posts')
-
-        .then((response) => response.json())
+     get('/posts')
 
         .then((response) => {
             console.log(response)

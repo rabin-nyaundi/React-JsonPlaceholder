@@ -3,6 +3,7 @@ import * as Yup from 'yup'
 import { toast } from "react-toastify";
 import { Button, Container, CssBaseline, Grid, TextField } from '@mui/material';
 import { Box } from '@mui/system';
+import { patch, post } from '../utils/API';
 
 
 export default function PostForm(props) {
@@ -18,14 +19,7 @@ export default function PostForm(props) {
         }
 
        if ('id' in post){
-           fetch(`https://jsonplaceholder.typicode.com/posts/${post.id}`,{
-                method: 'PUT',
-                body: JSON.stringify(postData),
-                 headers: {
-                     'Content-type': 'application/json; charset=UTF-8',
-                    },
-                })
-                .then((response) => response.json())
+           patch(`/posts/${post.id}`,postData)
                 .then((response) => {
                     toast.success('Post Updated')
                     console.log(response)
@@ -37,14 +31,7 @@ export default function PostForm(props) {
        else{
         console.log("id not in post")
 
-            fetch('https://jsonplaceholder.typicode.com/posts',{
-                method: 'POST',
-                body: JSON.stringify(postData),
-                 headers: {
-                     'Content-type': 'application/json; charset=UTF-8',
-                    },
-                })
-                .then((response) => response.json())
+            post('/posts',postData)
                 .then((response) => {
                     toast.success('post Added')
                     console.log(response)

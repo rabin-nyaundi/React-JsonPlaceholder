@@ -12,6 +12,7 @@ import { Backdrop, Button, Container, CssBaseline, Fade, Grid, Modal } from "@mu
 import { modalStyle } from "../../components/assets/css/Styles";
 import TodoForm from "../../components/todos/TodoForm";
 import { Box } from "@mui/system";
+import { get } from "../../components/utils/API";
 
 export default function index() {
 
@@ -24,8 +25,7 @@ export default function index() {
     }, [todos])
 
     const readTodos = () => {
-        fetch('https://jsonplaceholder.typicode.com/todos')
-        .then((res)=>res.json())
+        get('/todos')
         .then((response) =>{
             settodos(response)
             console.log(response)

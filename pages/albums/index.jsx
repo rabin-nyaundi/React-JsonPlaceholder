@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Album from "../../components/album/Album";
 import DashboardLayout from "../../components/layout/DashboardLayout";
+import { get } from "../../components/utils/API";
 
 export default function Index() {
 
@@ -15,8 +16,7 @@ export default function Index() {
         readAlbums();
     },[])
     function readAlbums() {
-        fetch('https://jsonplaceholder.typicode.com/albums')
-        .then((res)=> res.json())
+        get('/albums')
         .then((response)=>{
             setalbums(response)
             console.log("albums",response)

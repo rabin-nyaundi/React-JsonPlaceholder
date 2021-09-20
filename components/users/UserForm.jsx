@@ -3,6 +3,7 @@ import * as Yup from 'yup'
 import { toast } from "react-toastify";
 import { Button, Container, CssBaseline, Grid, TextField } from '@mui/material';
 import { Box } from '@mui/system';
+import { patch, post } from '../utils/API';
 
 
 export default function UserForm(props) {
@@ -44,14 +45,7 @@ export default function UserForm(props) {
         }
 
        if ('id' in user){
-           fetch(`https://jsonplaceholder.typicode.com/users/${user.id}`,{
-                method: 'PUT',
-                body: JSON.stringify(postData),
-                 headers: {
-                     'Content-type': 'application/json; charset=UTF-8',
-                    },
-                })
-                .then((response) => response.json())
+           patch(`/users/${user.id}`, postData)
                 .then((response) => {
                     toast.success('User Updated')
                     console.log(response)
@@ -63,14 +57,7 @@ export default function UserForm(props) {
        else{
         //    let users;
 
-            fetch('https://jsonplaceholder.typicode.com/users',{
-                method: 'POST',
-                body: JSON.stringify(postData),
-                 headers: {
-                     'Content-type': 'application/json; charset=UTF-8',
-                    },
-                })
-                .then((response) => response.json())
+            post('/users', postData)
                 .then((response) => {
                     toast.success('User Added')
                     console.log(response)
