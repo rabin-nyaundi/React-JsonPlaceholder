@@ -8,9 +8,10 @@ export const get = async (urlSuffix) => {
     return await res.json()
 }
 
-export const post = async (urlSuffix) => {
+export const post = async (urlSuffix, postData) => {
     const res = await fetch(app.endpoint + urlSuffix, {
         method: 'POST',
+        data: JSON.stringify(postData),
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
         }
@@ -20,9 +21,10 @@ export const post = async (urlSuffix) => {
 }
 
 
-export const patch = async (urlSuffix) => {
+export const patch = async (urlSuffix, postData) => {
     const res = await fetch(app.endpoint + urlSuffix, {
         method: 'PUT',
+        data: JSON.stringify(postData),
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
         }

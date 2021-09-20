@@ -5,6 +5,7 @@ import DashboardLayout from "../../components/layout/DashboardLayout";
 import Photo from "../../components/photos/Photo";
 import Stack from '@mui/material/Stack';
 import Chip from '@mui/material/Chip';
+import { get } from "../../components/utils/API";
 
 
 export default function Index({id}) {
@@ -19,8 +20,7 @@ export default function Index({id}) {
 
     function readPhotos() {
         setloading(true)
-        fetch(`https://jsonplaceholder.typicode.com/photos/?albumId=${id}`)
-        .then((res) =>res.json())
+        get(`/photos/?albumId=${id}`)
         .then((response) =>{
             setphotos(response)
             console.log(response)

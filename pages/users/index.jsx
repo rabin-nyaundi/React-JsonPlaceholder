@@ -6,7 +6,7 @@ import Users from "../../components/users/Users";
 import { modalStyle } from "../../components/assets/css/Styles";
 import UserForm from "../../components/users/UserForm";
 import { toast } from "react-toastify";
-import { get } from "../../components/utils/API";
+import { discard, get } from "../../components/utils/API";
 
 
 export default function Index() {
@@ -22,7 +22,7 @@ export default function Index() {
         get('/users')
         .then((response) =>{
             setusers(response)
-            consolelog("users",response)
+            console.log("users",response)
         })
         .catch((err)=>{
             console.log(err.response)
@@ -30,9 +30,9 @@ export default function Index() {
     }
 
     const handleDelete = (id) =>{
-        fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+        discard(`/users/${id}`, {
             method: 'DELETE',
-        }).then((response) =>response.json())
+        })
         .then((response)=>{
             console.log(response,"deleted")
             readUsers();
