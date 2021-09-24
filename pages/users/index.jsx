@@ -7,27 +7,17 @@ import { modalStyle } from "../../components/assets/css/Styles";
 import UserForm from "../../components/users/UserForm";
 import { toast } from "react-toastify";
 import { discard, get } from "../../components/utils/API";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 
 export default function Index() {
 
+    // const dispatch = useDispatch();
+    const allUsers = useSelector(state => state.allUsers)
+    const { users } = allUsers
+
     const [open, setOpen] = useState(false);
-    const [users, setusers] = useState([]);
-
-    useEffect(() => {
-        readUsers();
-    }, []);
-
-    const readUsers = () => {
-        get('/users')
-        .then((response) =>{
-            setusers(response)
-            console.log("users",response)
-        })
-        .catch((err)=>{
-            console.log(err.response)
-        })
-    }
 
     const handleDelete = (id) =>{
         discard(`/users/${id}`, {
@@ -75,7 +65,7 @@ export default function Index() {
                     boxShadow={1}
                 >
                     <Grid container spacing={1} p={3}>
-                        {users.map((user, key)=>(
+                        {users && users.map((user, key)=>(
                             <Users 
                                 key={key}
                                 user={user}

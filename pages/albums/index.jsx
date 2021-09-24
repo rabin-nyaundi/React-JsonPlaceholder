@@ -2,6 +2,7 @@ import { Button, Container, CssBaseline, Grid, Table, TableBody, TableCell, Tabl
 import { Box } from "@mui/system";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Album from "../../components/album/Album";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import { get } from "../../components/utils/API";
@@ -9,22 +10,9 @@ import { get } from "../../components/utils/API";
 export default function Index() {
 
     const router = useRouter();
-
-    const [albums, setalbums] = useState([]);
-
-    useEffect(()=>{
-        readAlbums();
-    },[])
-    function readAlbums() {
-        get('/albums')
-        .then((response)=>{
-            setalbums(response)
-            console.log("albums",response)
-        }).catch((err)=>{
-            console.log(err.response)
-        })
-    }
-
+    
+    const allAlbums = useSelector(state => state.allAlbums)
+    const { albums } = allAlbums;
 
     function handleNavigate(id){
         console.log("Yessss",id)
@@ -52,7 +40,7 @@ export default function Index() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {albums.map((album, index)=>(
+                            {albums && albums.map((album, index)=>(
                                 <Album 
                                     key={index} 
                                     id={album.id} 

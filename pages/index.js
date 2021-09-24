@@ -7,74 +7,34 @@ import PhotoAlbumIcon from '@mui/icons-material/PhotoAlbum';
 import TaskIcon from '@mui/icons-material/Task';
 import { get } from '../components/utils/API';
 
+import { connect, useDispatch, useSelector } from 'react-redux';
+import {setUsers, setPosts, fetchUsers, fetchPosts, fetchAlbums, fetchTodos} from '../components/store/actions';
 
 
-export default function Home() {
+export function Home() {
 
+  const dispatch = useDispatch();
+  const allUsers = useSelector(state => state.allUsers)
+  const { users } = allUsers;
 
+  const allPosts = useSelector(state => state.allPosts)
+  const { posts } = allPosts;
 
-  const [users, setusers] = useState([]);
-  const [todos, settodos] = useState([]);
-  const [posts, setposts] = useState([]);
-  const [albums, setalbums] = useState([])
+  const allAlbums = useSelector(state => state.allAlbums)
+  const { albums } = allAlbums;
+
+  const allTodos = useSelector(state => state.allTodos)
+  const { todos } = allTodos;
+
 
    useEffect(() => {
-        readUsers();
-        readAlbums();
-        readTodos();
-        readPosts();
-    }, [])
-
-  function readUsers(){
-     get('/users')
-        .then((response) =>{
-            setusers(response)
-            consolelog("users",response)
-        })
-        .catch((err)=>{
-            console.log(err.response)
-        })
-  }
-
-
-  function readTodos(){
-     get('/todos')
-     .then((response) =>{
-        settodos(response)
-        console.log(response)
-      })
-      .catch((err)=>{
-        console.log(err.response)
-       })
-  }
-
-
-  function readAlbums(){
-     get('/albums')
-     .then((response)=>{
-       setalbums(response)
-       console.log("albums",response)
-      })
-      .catch((err)=>{
-        console.log(err.response)
-      })
-  }
+     dispatch(fetchUsers());
+     dispatch(fetchPosts());
+     dispatch(fetchAlbums());
+     dispatch(fetchTodos())
+    },[]);
 
   
-  function readPosts(){
-     get('/posts')
-
-        .then((response) => {
-            console.log(response)
-            setposts(response)
-            setposts(resonse)
-        }).catch((err)=>{
-            console.log(err.response)
-        })
-  }
-  
-
-
   return (
     <>
       <DashboardLayout title="Weza app">
@@ -105,7 +65,7 @@ export default function Home() {
 
                     <Grid xs style={{display:'flex', justifyContent:'flex-end'}} item >
                       <Typography component="h2" variant="h4">
-                        {users.length}
+                        {users && users.length}
                       </Typography>
                       </Grid>
 
@@ -136,7 +96,7 @@ export default function Home() {
 
                     <Grid xs style={{display:'flex', justifyContent:'flex-end'}} item >
                       <Typography component="h2" variant="h4">
-                        {posts.length}
+                        {posts && posts.length}
                       </Typography>
                     </Grid>
 
@@ -167,7 +127,7 @@ export default function Home() {
 
                     <Grid xs style={{display:'flex', justifyContent:'flex-end'}} item >
                       <Typography component="h2" variant="h4">
-                        {albums.length}
+                        {albums && albums.length}
                       </Typography>
                     </Grid>
 
@@ -198,7 +158,7 @@ export default function Home() {
 
                     <Grid xs style={{display:'flex', justifyContent:'flex-end'}} item >
                       <Typography component="h2" variant="h4">
-                        {todos.length}
+                        {todos && todos.length}
                       </Typography>
                       </Grid>
 
@@ -213,3 +173,16 @@ export default function Home() {
     </>
   )
 }
+
+
+const mapStateToProps = (state) => ({
+  currentUsers: state.currentUsers
+});
+
+const mapDispatchToProps = {
+  setUsers : setUsers, 
+  setPosts:setPosts,
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

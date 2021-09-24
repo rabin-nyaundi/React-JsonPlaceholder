@@ -13,27 +13,14 @@ import { modalStyle } from "../../components/assets/css/Styles";
 import TodoForm from "../../components/todos/TodoForm";
 import { Box } from "@mui/system";
 import { get } from "../../components/utils/API";
+import { useSelector } from "react-redux";
 
 export default function index() {
 
+    const allTodos = useSelector(state => state.allTodos)
+    const { todos } = allTodos;
+
     const [open, setOpen] = useState(false);
-
-    const [todos, settodos] = useState([]);
-
-    useEffect(()=>{
-        readTodos();
-    }, [todos])
-
-    const readTodos = () => {
-        get('/todos')
-        .then((response) =>{
-            settodos(response)
-            console.log(response)
-        })
-        .catch((err)=>{
-            console.log(err.response)
-        })
-    }
 
     const handleOpen = () => {
         setOpen(true);
@@ -73,7 +60,7 @@ export default function index() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {todos.map((todo, key)=>(
+                        {todos && todos.map((todo, key)=>(
                             <Todo 
                                 key={key} 
                                 id={todo.id} 

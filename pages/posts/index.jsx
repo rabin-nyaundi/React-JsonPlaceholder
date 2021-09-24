@@ -1,6 +1,7 @@
 import { Backdrop, Button, Container, CssBaseline, Fade, Grid, Modal } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { modalStyle } from "../../components/assets/css/Styles";
 import DashboardLayout from "../../components/layout/DashboardLayout";
@@ -10,7 +11,9 @@ import { discard, get } from "../../components/utils/API";
 
 export default function Index() {
 
-    const [posts, setposts] = useState([]);
+    const allPosts = useSelector(state => state.allPosts)
+    const { posts } = allPosts;
+
     const [open, setOpen] = useState(false);
 
     useEffect(()=>{
@@ -71,7 +74,7 @@ export default function Index() {
                     </Box>
                     <Box>
                         <Grid container spacing={2}>
-                            {posts.map((post, key)=>(
+                            {posts && posts.map((post, key)=>(
                                 <Post 
                                     key={key} 
                                     title={post.title} 
