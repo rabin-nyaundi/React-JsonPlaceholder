@@ -4,12 +4,15 @@ import { toast } from "react-toastify";
 import { Button, Container, CssBaseline, Grid, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import { patch, post } from '../utils/API';
+import { useDispatch } from 'react-redux';
+import { addTodo, updateTodo } from '../store/actions';
 
 
 
 export default function TodoForm(props) {
 
     const todo = props.todo;
+    const dispatch = useDispatch()
 
     
     function handleTodo(validationSchema) {
@@ -22,27 +25,16 @@ export default function TodoForm(props) {
         }
 
        if ('id' in todo){
-           patch(`/todos/${todo.id}`, postData)
-                .then((response) => {
-                    toast.success('Todo Updated')
-                    console.log(response)
-                    props.onClose();
-                }).catch((err)=>{
-                    console.log(err.response)
-                 })
-       }
+           dispatch(updateTodo(todo.id, postData))
+           toast.success('Todo Updated')
+           props.onClose();
+        }
        else{
-
-            post('/todos', postData)
-                .then((response) => {
-                    toast.success('Todo Added')
-                    console.log(response)
-                    props.onClose();
-                }).catch((err)=>{
-                    console.log(err.response)
-                 })
-                }
-            };
+           dispatch(addTodo(postData));
+           toast.success('Todo Added')
+           props.onClose();
+        }
+    };
     return (
         <div>
             <Container component="main" maxWidth="sm">

@@ -4,43 +4,36 @@ import { toast } from "react-toastify";
 import { Button, Container, CssBaseline, Grid, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import { post, patch, openPost } from '../utils/API';
+import { useDispatch } from 'react-redux';
+import { addPost, updatePost } from '../store/actions/index'
 
 
 export default function PostForm(props) {
 
+    const dispatch = useDispatch()
     const post = props.post;
-
-      function handlePost(validationSchema) {
-
-
-        let postData ={
+    
+    function handlePost(validationSchema) {
+        
+        let postData = {
             title: validationSchema.title,
             body: validationSchema.body
         }
 
        if ('id' in post){
-           patch(`/posts/${post.id}`,postData)
-                .then((response) => {
-                    toast.success('Post Updated')
-                    console.log(response)
-                    props.onClose();
-                }).catch((err)=>{
-                    console.log(err.response)
-                 })
-       }
-       else{
-        console.log("id not in post")
+           console.log("Update post");
+           dispatch(updatePost(post.id, postData));
+           toast.success('Post Updated');
+           props.onClose();
 
-            openPost('/posts',postData)
-                .then((response) => {
-                    toast.success('post Added')
-                    console.log(response)
-                    props.onClose();
-                }).catch((err)=>{
-                    console.log(err.response)
-                 })
-                }
-            };
+  
+        } else{
+            console.log("id not in post")
+            dispatch(addPost(postData))
+            toast.success('post Added')
+            props.onClose();
+        }
+    };
 
 
 

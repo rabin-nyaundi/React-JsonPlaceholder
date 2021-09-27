@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { fetch_albums_reducer, fetch_posts_reducer, fetch_todos_reducer, fetch_users_reducer } from ".";
+import { fetch_albums_reducer, fetch_posts_reducer, fetch_todos_reducer, fetch_users_reducer } from "./index";
 
 const rootReducer = combineReducers({
     allPosts: fetch_posts_reducer,

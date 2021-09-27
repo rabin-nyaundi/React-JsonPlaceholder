@@ -13,12 +13,15 @@ import { modalStyle } from "../../components/assets/css/Styles";
 import TodoForm from "../../components/todos/TodoForm";
 import { Box } from "@mui/system";
 import { get } from "../../components/utils/API";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteTodo } from "../../components/store/actions";
+import { toast } from "react-toastify";
 
 export default function index() {
 
     const allTodos = useSelector(state => state.allTodos)
     const { todos } = allTodos;
+    const dispatch = useDispatch()
 
     const [open, setOpen] = useState(false);
 
@@ -28,6 +31,11 @@ export default function index() {
 
     const handleClose = () => {
         setOpen(false);
+    }
+
+    const handleDelete = (id) => {
+        dispatch(deleteTodo(id));
+        toast.success('Todo deleted')
     }
 
 
@@ -67,6 +75,7 @@ export default function index() {
                                 title={todo.title} 
                                 completed={todo.completed} 
                                 todo={todo}
+                                delete={()=>handleDelete(todo.id)}
                             />
                         ))}
                     </TableBody>

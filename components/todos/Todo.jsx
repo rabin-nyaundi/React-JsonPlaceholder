@@ -31,7 +31,12 @@ export default function Todo(props) {
                     </Button>
                 </TableCell>
                 <TableCell>
-                    <Button variant="outlined">Delete</Button>
+                    <Button 
+                        variant="outlined"
+                        onClick={props.delete}
+                    >
+                        Delete
+                    </Button>
                 </TableCell>
 
                 <Grid item sm={12} xs={12}>

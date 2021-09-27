@@ -30,13 +30,6 @@ export function UserForm(props) {
        if ('id' in user){
            dispatch(updateUser(user.id, postData))
             props.onClose();
-        //    patch(`/users/${user.id}`, postData)
-        //         .then((response) => {
-        //             toast.success('User Updated')
-        //             console.log(response)
-        //         }).catch((err)=>{
-        //             console.log(err.response)
-        //          })
        }
        else{
         dispatch(addUser(postData))

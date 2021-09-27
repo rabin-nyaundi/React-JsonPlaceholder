@@ -1,48 +1,30 @@
 import { Backdrop, Button, Container, CssBaseline, Fade, Grid, Modal } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { modalStyle } from "../../components/assets/css/Styles";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import Post from "../../components/posts/Post";
 import PostForm from "../../components/posts/PostForm";
-import { discard, get } from "../../components/utils/API";
+import { deletePost } from "../../components/store/actions";
+
+
 
 export default function Index() {
 
+    const dispatch = useDispatch();
     const allPosts = useSelector(state => state.allPosts)
     const { posts } = allPosts;
 
     const [open, setOpen] = useState(false);
 
-    useEffect(()=>{
-        readPosts();
-    },[])
-    const readPosts = () =>{
-        get('/posts')
-        .then((response) => {
-            console.log(response)
-            setposts(response)
-            setposts(resonse)
-        }).catch((err)=>{
-            console.log(err.response)
-        })
-    }
-
 
     const handleDelete = (id) =>{
         console.log(id)
-        discard(`/posts/${id}`, {
-            method: 'DELETE',
-        })
-        .then((response)=>{
-            toast.success("Post deleted")
-            console.log(response,"deleted")
-        }).catch((err)=>{
-            console.log(err.response)
-        })
-}
+        dispatch(deletePost(id))
+        toast.success("Post deleted")
+    }
 
 
       const handleOpen = () => {

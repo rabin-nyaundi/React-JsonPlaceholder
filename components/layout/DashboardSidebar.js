@@ -28,14 +28,14 @@ const items = [
         title: 'Posts'
     },
     {
-        href: '/albums',
-        icon: PhotoAlbumIcon,
-        title: 'Album'
-    },
-    {
         href: '/todos',
         icon: PhotoAlbumIcon,
         title: 'Todos'
+    },
+    {
+        href: '/albums',
+        icon: PhotoAlbumIcon,
+        title: 'Album'
     },
 
 ];
