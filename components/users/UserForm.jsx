@@ -5,12 +5,16 @@ import { Button, Container, CssBaseline, Grid, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import { patch, post } from '../utils/API';
 
+import { connect, useDispatch } from 'react-redux';
+import { addUser, updateUser } from '../store/actions';
 
-export default function UserForm(props) {
+
+
+export function UserForm(props) {
 
     const user = props.user
 
-    console.log(user.id);
+    const dispatch = useDispatch();
 
     function handleAddUser(validationSchema) {
 
@@ -24,29 +28,21 @@ export default function UserForm(props) {
         }
 
        if ('id' in user){
-           patch(`/users/${user.id}`, postData)
-                .then((response) => {
-                    toast.success('User Updated')
-                    console.log(response)
-                    props.onClose();
-                }).catch((err)=>{
-                    console.log(err.response)
-                 })
+           dispatch(updateUser(user.id, postData))
+            props.onClose();
+        //    patch(`/users/${user.id}`, postData)
+        //         .then((response) => {
+        //             toast.success('User Updated')
+        //             console.log(response)
+        //         }).catch((err)=>{
+        //             console.log(err.response)
+        //          })
        }
        else{
-        //    let users;
-
-            post('/users', postData)
-                .then((response) => {
-                    toast.success('User Added')
-                    console.log(response)
-                    props.onClose();
-                    // users = [postData,...this.props.users];
-                }).catch((err)=>{
-                    console.log(err.response)
-                 })
-                }
-            };
+        dispatch(addUser(postData))
+         props.onClose();
+        }
+    };
 
     return (
         <div>
@@ -158,4 +154,5 @@ export default function UserForm(props) {
     )
 }
 
+export default connect(null, {addUser})(UserForm)
 

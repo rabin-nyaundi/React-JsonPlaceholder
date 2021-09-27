@@ -23,16 +23,11 @@ export default function Users(props) {
                 <Avatar sx={{height:80, width: 80}} />
                 <Typography variant="body">
                     Name: {props.name}
-                </Typography> <br />
-                {/* <Typography variant="body">
-                    Email: {props.email}
-                </Typography> <br /> */}
+                </Typography> 
+                <br />
                 <Typography variant="body">
-                    Address: {props.address}
-                </Typography> <br />
-                {/* <Typography variant="body">
-                    Company : {props.company}
-                </Typography> */}
+                    Username: {props.username}
+                </Typography> 
                 <br />
                 <Grid container spacing={2}>
                     <Grid item xs >
